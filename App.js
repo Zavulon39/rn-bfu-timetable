@@ -5,6 +5,8 @@ import screenManager from './src/store/screenManager'
 import abitsTimetable from './src/store/abitsTimetable'
 import teachers from './src/store/teachers'
 import subjects from './src/store/subjects'
+import favorite from './src/store/favorite'
+import { favoriteDB } from './src/favoriteDB'
 
 export default observer(function App() {
   const [appLoaded, setAppLoaded] = useState(false)
@@ -13,7 +15,7 @@ export default observer(function App() {
     RobotoBold: require('./assets/fonts/Roboto-Medium.ttf'),
   })
 
-  useEffect(() => {
+  useEffect(async () => {
     abitsTimetable.setData({
       'Институт природопользования, территориального развития и градостроительства':
         {
@@ -265,6 +267,9 @@ export default observer(function App() {
         { title: 'Test2' },
       ],
     })
+    await favoriteDB.init()
+    const favorites = await favoriteDB.getFavorite()
+    favorite.setData(favorites)
     setAppLoaded(true)
   }, [])
 

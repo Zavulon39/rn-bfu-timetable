@@ -11,17 +11,17 @@ class Subjects {
     this.data = data
   }
 
-  getFilteredData(text) {
-    if (!text) return this.data
+  getFilteredData(institut, text) {
+    if (!text) return this.data[institut]
 
     const resp = []
 
-    for (let el of this.data) {
-      let { teacher } = el
-      teacher = teacher.toLowerCase()
+    for (let el of this.data[institut]) {
+      let { title } = el
+      title = title.toLowerCase()
       text = text.toLowerCase()
 
-      if (teacher.indexOf(text) + 1) {
+      if (title.indexOf(text) + 1) {
         resp.push(el)
       }
     }

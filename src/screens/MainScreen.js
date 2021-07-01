@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
+  Dimensions,
 } from 'react-native'
 import { TextRegular } from '../components/ui/Text'
 import { Feather, FontAwesome5, FontAwesome } from '@expo/vector-icons'
@@ -35,14 +36,17 @@ export const MainScreen = () => {
             Расписание преподавателя
           </TextRegular>
         </TouchableOpacity>
-        <TouchableOpacity style={{ marginTop: 16 }} activeOpacity={0.8}>
+        {/* <TouchableOpacity style={{ marginTop: 16 }} activeOpacity={0.8}>
           <TextRegular style={{ fontSize: 15, color: '#fff' }}>
             Моё расписание
           </TextRegular>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View style={styles.smallIcons}>
-        <TouchableOpacity activeOpacity={0.8}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => screenManager.navigate('Favorite')}
+        >
           <Feather name='star' size={26} color='white' />
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.8}>
@@ -60,11 +64,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: THEME.MAIN_COLOR,
+    justifyContent: 'flex-end',
   },
 
   btnContainer: {
-    marginTop: 320,
     alignItems: 'center',
+    marginBottom: 200,
   },
 
   btn: {
@@ -77,10 +82,10 @@ const styles = StyleSheet.create({
   },
 
   smallIcons: {
-    marginTop: 180,
     marginLeft: 18,
     width: 100,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 50,
   },
 })

@@ -1,29 +1,28 @@
 {
   "expo": {
-    "name": "rn-bfu",
+    "name": "Расписание пар",
     "slug": "rn-bfu",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/image/favicon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/image/bg.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#2EADE4"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/image/bg.png",
+        "backgroundColor": "#2EADE4"
+      },
+      "package": "com.kantiana.timetable"
     },
     "web": {
       "favicon": "./assets/favicon.png"

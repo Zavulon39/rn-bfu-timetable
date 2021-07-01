@@ -11,12 +11,12 @@ class Teachers {
     this.data = data
   }
 
-  getFilteredData(institut, text) {
-    if (!text) return this.data[institut]
+  getFilteredData(text) {
+    if (!text) return this.data
 
     const resp = []
 
-    for (let el of this.data['institut']) {
+    for (let el of this.data) {
       let { teacher } = el
       teacher = teacher.toLowerCase()
       text = text.toLowerCase()

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   View,
   StyleSheet,
@@ -16,12 +16,16 @@ import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import screenManager from '../../store/screenManager'
 import abitsTimetable from '../../store/abitsTimetable'
 import { THEME } from '../../theme'
+import { favoriteDB } from '../../favoriteDB'
+import favorite from '../../store/favorite'
 
 export const TimetableScreen = () => {
   const institutTitle = screenManager.getParam('institutTitle')
   const groupTitle = screenManager.getParam('groupTitle')
   const TLTitle = screenManager.getParam('item')
+  const [icon, setIcon] = useState('staro')
   const [date, setDate] = useState(new Date(Date.now()))
+  const [id, setId] = useState(null)
   const [timetable, setTimetable] = useState(
     abitsTimetable
       .getTimetable(TLTitle, institutTitle, groupTitle)
@@ -56,7 +60,15 @@ export const TimetableScreen = () => {
     'Ноября',
     'Декабря',
   ]
-
+  favoriteDB.getFavorite().then(arr => {
+    arr.forEach(prev => {
+      el = JSON.parse(prev.data)
+      if (groupTitle === el.groupTitle) {
+        setIcon('star')
+        setId(prev.id)
+      }
+    })
+  })
   const showDatePicker = async () => {
     if (Platform.OS === 'android') {
       try {
@@ -98,8 +110,26 @@ export const TimetableScreen = () => {
         title='Расписание'
         prevLink='AbitsGroup'
         headerRight={
-          <TouchableOpacity activeOpacity={0.8}>
-            <AntDesign name='staro' size={25} color='white' />
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={async () => {
+              if (icon === 'staro') {
+                const data = JSON.stringify({
+                  TLTitle,
+                  institutTitle,
+                  groupTitle,
+                })
+                await favoriteDB.add(data)
+                setIcon('star')
+              } else {
+                await favoriteDB.del(id)
+                setIcon('staro')
+              }
+              const favorites = await favoriteDB.getFavorite()
+              favorite.setData(favorites)
+            }}
+          >
+            <AntDesign name={icon} size={25} color='white' />
           </TouchableOpacity>
         }
       />

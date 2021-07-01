@@ -24,9 +24,9 @@ export const ResultScreen = () => {
     ? 'Вот что удалось найти'
     : 'Ничего не удалось найти :('
 
-  // screenManager.params.searchGroupTime = null
-  // screenManager.params.searchGroupSubject = null
-  // screenManager.params.searchGroupTeacher = null
+  screenManager.params.searchGroupTime = null
+  screenManager.params.searchGroupSubject = null
+  screenManager.params.searchGroupTeacher = null
 
   return (
     <ScrollView>

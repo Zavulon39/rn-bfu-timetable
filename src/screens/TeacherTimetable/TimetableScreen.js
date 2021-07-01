@@ -93,15 +93,7 @@ export const TimetableScreen = () => {
 
   return (
     <ScrollView style={{ backgroundColor: THEME.GRAY_COLOR }}>
-      <Header
-        title='Расписание'
-        prevLink='TeacherTeacher'
-        headerRight={
-          <TouchableOpacity activeOpacity={0.8}>
-            <AntDesign name='staro' size={25} color='white' />
-          </TouchableOpacity>
-        }
-      />
+      <Header title='Расписание' prevLink='TeacherTeacher' />
       <View style={styles.titleContainer}>
         <TextRegular style={styles.title}>
           {date.getDate()} {month[date.getMonth()]}, {days[date.getDay()]}

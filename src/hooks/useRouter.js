@@ -9,6 +9,7 @@ import { TimeScreen } from '../screens/SearchGroup/TimeScreen'
 import { SubjectScreen } from '../screens/SearchGroup/SubjectScreen'
 import { TeacherScreen as SearchGroupTeacherScreen } from '../screens/SearchGroup/TeacherScreen'
 import { ResultScreen } from '../screens/SearchGroup/ResultScreen'
+import { FavoriteScreen } from '../screens/Favorite/FavoriteScreen'
 
 export const useRouter = route => {
   switch (route) {
@@ -32,6 +33,8 @@ export const useRouter = route => {
       return <SearchGroupTeacherScreen />
     case 'SearchGroupResult':
       return <ResultScreen />
+    case 'Favorite':
+      return <FavoriteScreen />
     default:
       return null
   }
