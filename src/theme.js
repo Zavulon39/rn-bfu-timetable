@@ -1,0 +1,9 @@
+export const THEME = {
+  MAIN_COLOR: '#2EADE4',
+  SECONDARY_COLOR: '#F48939',
+  GRAY_COLOR: '#e5e5e5',
+  DARKGRAY_COLOR: '#7d7d7d',
+
+  ICONGRAY_COLOR: '#A5A3A3',
+  INPUTGRAY_COLOR: '#eaeaea',
+}
