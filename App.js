@@ -6,7 +6,9 @@ import abitsTimetable from './src/store/abitsTimetable'
 import teachers from './src/store/teachers'
 import subjects from './src/store/subjects'
 import favorite from './src/store/favorite'
+import history from './src/store/history'
 import { favoriteDB } from './src/favoriteDB'
+import { historyDB } from './src/historyDB'
 
 export default observer(function App() {
   const [appLoaded, setAppLoaded] = useState(false)
@@ -24,8 +26,8 @@ export default observer(function App() {
               {
                 title: 'Теория вероятностей и математическая статистика',
                 type: 'лекция',
-                startTime: '08.30',
-                endTime: '10.00',
+                startTime: new Date(Date.now()),
+                endTime: new Date(Date.now() + 1000000),
                 teacher: 'Роман Иванович Романов',
                 place: 'Аудитория 312',
                 date: new Date(2021, 5, 30),
@@ -33,8 +35,8 @@ export default observer(function App() {
               {
                 title: 'Теория вероятностей и математическая статистика',
                 type: 'лекция',
-                startTime: '08.30',
-                endTime: '10.00',
+                startTime: new Date(Date.now()),
+                endTime: new Date(Date.now() + 1000000),
                 teacher: 'Роман Иванович Романов',
                 place: 'Аудитория 312',
                 date: new Date(Date.now()),
@@ -42,26 +44,8 @@ export default observer(function App() {
               {
                 title: 'Теория вероятностей и математическая статистика',
                 type: 'лекция',
-                startTime: '08.30',
-                endTime: '10.00',
-                teacher: 'Роман Иванович Романов',
-                place: 'Аудитория 312',
-                date: new Date(Date.now()),
-              },
-              {
-                title: 'Теория вероятностей и математическая статистика',
-                type: 'лекция',
-                startTime: '08.30',
-                endTime: '10.00',
-                teacher: 'Роман Иванович Романов',
-                place: 'Аудитория 312',
-                date: new Date(Date.now()),
-              },
-              {
-                title: 'Теория вероятностей и математическая статистика',
-                type: 'лекция',
-                startTime: '08.30',
-                endTime: '10.00',
+                startTime: new Date(Date.now()),
+                endTime: new Date(Date.now() + 1000000),
                 teacher: 'Иванов Иван Инванович',
                 place: 'Аудитория 312',
                 date: new Date(Date.now()),
@@ -71,80 +55,8 @@ export default observer(function App() {
               {
                 title: 'Теория вероятностей и математическая статистика',
                 type: 'лекция',
-                startTime: '08.30',
-                endTime: '10.00',
-                teacher: 'Иванов Иван Инванович',
-                place: 'Аудитория 312',
-                date: new Date(Date.now()),
-              },
-            ],
-          },
-          Бакалавриат: {
-            333444: [
-              {
-                title: 'Теория вероятностей и математическая статистика',
-                type: 'лекция',
-                startTime: '08.30',
-                endTime: '10.00',
-                teacher: 'Иванов Иван Инванович',
-                place: 'Аудитория 312',
-                date: new Date(Date.now()),
-              },
-            ],
-            444333: [
-              {
-                title: 'Теория вероятностей и математическая статистика',
-                type: 'лекция',
-                startTime: '08.30',
-                endTime: '10.00',
-                teacher: 'Иванов Иван Инванович',
-                place: 'Аудитория 312',
-                date: new Date(Date.now()),
-              },
-            ],
-          },
-          Магистратура: {
-            555666: [
-              {
-                title: 'Теория вероятностей и математическая статистика',
-                type: 'лекция',
-                startTime: '08.30',
-                endTime: '10.00',
-                teacher: 'Иванов Иван Инванович',
-                place: 'Аудитория 312',
-                date: new Date(Date.now()),
-              },
-            ],
-            666555: [
-              {
-                title: 'Теория вероятностей и математическая статистика',
-                type: 'лекция',
-                startTime: '08.30',
-                endTime: '10.00',
-                teacher: 'Иванов Иван Инванович',
-                place: 'Аудитория 312',
-                date: new Date(Date.now()),
-              },
-            ],
-          },
-          'СПО 9 Классов': {
-            777888: [
-              {
-                title: 'Теория вероятностей и математическая статистика',
-                type: 'лекция',
-                startTime: '08.30',
-                endTime: '10.00',
-                teacher: 'Иванов Иван Инванович',
-                place: 'Аудитория 312',
-                date: new Date(Date.now()),
-              },
-            ],
-            888777: [
-              {
-                title: 'Теория вероятностей и математическая статистика',
-                type: 'лекция',
-                startTime: '08.30',
-                endTime: '10.00',
+                startTime: new Date(Date.now()),
+                endTime: new Date(Date.now() + 1000000),
                 teacher: 'Иванов Иван Инванович',
                 place: 'Аудитория 312',
                 date: new Date(Date.now()),
@@ -154,12 +66,12 @@ export default observer(function App() {
         },
       'Медицинский институт': {
         Спецалитет: {
-          111222: [
+          333444: [
             {
               title: 'Теория вероятностей и математическая статистика',
               type: 'лекция',
-              startTime: '08.30',
-              endTime: '10.00',
+              startTime: new Date(Date.now()),
+              endTime: new Date(Date.now() + 1000000),
               teacher: 'Иванов Иван Инванович',
               place: 'Аудитория 312',
               date: new Date(2021, 5, 29),
@@ -167,68 +79,20 @@ export default observer(function App() {
             {
               title: 'Теория вероятностей и математическая статистика',
               type: 'лекция',
-              startTime: '08.30',
-              endTime: '10.00',
+              startTime: new Date(Date.now()),
+              endTime: new Date(Date.now() + 1000000),
               teacher: 'Иванов Иван Инванович',
               place: 'Аудитория 312',
               date: new Date(Date.now()),
             },
           ],
-          222111: [
+          4443333: [
             {
               title: 'Теория вероятностей и математическая статистика',
               type: 'лекция',
-              startTime: '08.30',
-              endTime: '10.00',
-              teacher: 'Иванов Иван Инванович',
-              place: 'Аудитория 312',
-              date: new Date(Date.now()),
-            },
-          ],
-        },
-        Бакалавриат: {
-          333444: [
-            {
-              title: 'Теория вероятностей и математическая статистика',
-              type: 'лекция',
-              startTime: '08.30',
-              endTime: '10.00',
-              teacher: 'Иванов Иван Инванович',
-              place: 'Аудитория 312',
-              date: new Date(Date.now()),
-            },
-          ],
-          444333: [
-            {
-              title: 'Теория вероятностей и математическая статистика',
-              type: 'лекция',
-              startTime: '08.30',
-              endTime: '10.00',
-              teacher: 'Иванов Иван Инванович',
-              place: 'Аудитория 312',
-              date: new Date(Date.now()),
-            },
-          ],
-        },
-        Магистратура: {
-          555666: [
-            {
-              title: 'Теория вероятностей и математическая статистика',
-              type: 'лекция',
-              startTime: '08.30',
-              endTime: '10.00',
-              teacher: 'Иванов Иван Инванович',
-              place: 'Аудитория 312',
-              date: new Date(Date.now()),
-            },
-          ],
-          666555: [
-            {
-              title: 'Теория вероятностей и математическая статистика',
-              type: 'лекция',
-              startTime: '08.30',
-              endTime: '10.00',
-              teacher: 'Иванов Иван Инванович',
+              startTime: new Date(Date.now()),
+              endTime: new Date(Date.now() + 1000000),
+              teacher: 'Роман Иванович Романов',
               place: 'Аудитория 312',
               date: new Date(Date.now()),
             },
@@ -242,34 +106,25 @@ export default observer(function App() {
         institut: 'Медицинский институт',
       },
       {
-        teacher: 'Test1',
-        institut: 'Медицинский институт',
-      },
-      {
         teacher: 'Роман Иванович Романов',
-        institut:
-          'Институт природопользования, территориального развития и градостроительства',
-      },
-      {
-        teacher: 'Test2',
         institut:
           'Институт природопользования, территориального развития и градостроительства',
       },
     ])
     subjects.setData({
       'Институт природопользования, территориального развития и градостроительства':
-        [
-          { title: 'Теория вероятностей и математическая статистика' },
-          { title: 'Test1' },
-        ],
+        [{ title: 'Теория вероятностей и математическая статистика' }],
       'Медицинский институт': [
         { title: 'Теория вероятностей и математическая статистика' },
-        { title: 'Test2' },
       ],
     })
+
     await favoriteDB.init()
+    await historyDB.init()
     const favorites = await favoriteDB.getFavorite()
+    const histories = await historyDB.getHistory()
     favorite.setData(favorites)
+    history.setData(histories)
     setAppLoaded(true)
   }, [])
 

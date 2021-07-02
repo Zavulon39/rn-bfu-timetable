@@ -51,24 +51,35 @@ class AbitsTimetable {
         for (const el of g[1]) {
           el.group = g[0]
           el.tl = j[0]
+
           if (subject && teacher) {
             if (
               (el.title === subject && el.teacher === teacher) ||
-              el.startTime === `${time.getHours()}.${time.getMinutes()}`
+              (el.startTime.getMinutes() === time.getMinutes() &&
+                el.startTime.getHours() === time.getHours())
             ) {
               resp.push(el)
             }
           } else if (subject) {
             if (
               el.title === subject ||
-              el.startTime === `${time.getHours()}.${time.getMinutes()}`
+              (el.startTime.getMinutes() === time.getMinutes() &&
+                el.startTime.getHours() === time.getHours())
             ) {
               resp.push(el)
             }
           } else if (teacher) {
             if (
               el.teacher === teacher ||
-              el.startTime === `${time.getHours()}.${time.getMinutes()}`
+              (el.startTime.getMinutes() === time.getMinutes() &&
+                el.startTime.getHours() === time.getHours())
+            ) {
+              resp.push(el)
+            }
+          } else {
+            if (
+              el.startTime.getMinutes() === time.getMinutes() &&
+              el.startTime.getHours() === time.getHours()
             ) {
               resp.push(el)
             }

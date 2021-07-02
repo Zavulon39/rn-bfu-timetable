@@ -1,5 +1,11 @@
 import React from 'react'
-import { View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  BackHandler,
+} from 'react-native'
 import { TextBold } from './ui/Text'
 import { Feather } from '@expo/vector-icons'
 import { THEME } from '../theme'
@@ -14,6 +20,13 @@ export const Header = ({
   const height =
     (Dimensions.get('screen').height - Dimensions.get('window').height) / 2
 
+  const navigateToPrev = () => screenManager.navigate(prevLink, params)
+
+  BackHandler.addEventListener('hardwareBackPress', () => {
+    navigateToPrev()
+    return true
+  })
+
   return (
     <View>
       <View style={{ height, backgroundColor: THEME.MAIN_COLOR }} />
@@ -23,7 +36,7 @@ export const Header = ({
             <TouchableOpacity
               activeOpacity={0.8}
               style={styles.icon}
-              onPress={() => screenManager.navigate(prevLink, params)}
+              onPress={navigateToPrev}
             >
               <Feather name='arrow-left' size={24} color='white' />
             </TouchableOpacity>

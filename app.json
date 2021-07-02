@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Расписание пар",
-    "slug": "rn-bfu",
+    "slug": "rn-bfu-timetable",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/image/favicon.png",
@@ -19,8 +19,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/image/bg.png",
-        "backgroundColor": "#2EADE4"
+        "foregroundImage": "./assets/image/favicon.png",
+        "backgroundColor": "#FFFFFF"
       },
       "package": "com.kantiana.timetable"
     },

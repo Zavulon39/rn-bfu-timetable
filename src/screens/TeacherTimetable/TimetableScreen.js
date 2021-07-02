@@ -18,6 +18,8 @@ import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import screenManager from '../../store/screenManager'
 import abitsTimetable from '../../store/abitsTimetable'
 import { THEME } from '../../theme'
+import { historyDB } from '../../historyDB'
+import history from '../../store/history'
 
 export const TimetableScreen = () => {
   const teacher = screenManager.getParam('teacher')
@@ -55,6 +57,18 @@ export const TimetableScreen = () => {
     'Ноября',
     'Декабря',
   ]
+
+  const historyItem = {
+    type: 'teacher',
+    data: {
+      teacher,
+    },
+  }
+  historyDB
+    .add(JSON.stringify(historyItem))
+    .then()
+    .catch(e => {})
+  historyDB.getHistory().then(histories => history.setData(histories))
 
   const showDatePicker = async () => {
     if (Platform.OS === 'android') {
@@ -116,10 +130,10 @@ export const TimetableScreen = () => {
                 <View style={styles.left}>
                   <View style={styles.textLeft}>
                     <TextBold style={{ color: '#fff' }}>
-                      {item.startTime}
+                      {item.startTime.getHours()}.{item.startTime.getMinutes()}
                     </TextBold>
                     <TextRegular style={{ color: '#fff' }}>
-                      {item.endTime}
+                      {item.endTime.getHours()}.{item.endTime.getMinutes()}
                     </TextRegular>
                   </View>
                 </View>
@@ -234,7 +248,7 @@ const styles = StyleSheet.create({
   },
 
   footer: {
-    flexDirection: 'row',
+    flexDirection: Dimensions.get('screen').width > 1120 ? 'row' : 'column',
     marginTop: 30,
     marginHorizontal: 16,
     justifyContent: 'space-between',

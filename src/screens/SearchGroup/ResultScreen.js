@@ -24,15 +24,19 @@ export const ResultScreen = () => {
     ? 'Вот что удалось найти'
     : 'Ничего не удалось найти :('
 
-  screenManager.params.searchGroupTime = null
-  screenManager.params.searchGroupSubject = null
-  screenManager.params.searchGroupTeacher = null
+  // screenManager.params.searchGroupTime = null
+  // screenManager.params.searchGroupSubject = null
+  // screenManager.params.searchGroupTeacher = null
 
   return (
-    <ScrollView>
+    <ScrollView
+      style={timetable.length ? { backgroundColor: THEME.GRAY_COLOR } : {}}
+    >
       <Header title={title} prevLink='AbitsGroup' />
       {timetable.length ? (
-        <TextRegular style={styles.title}>Вот что удалось найти</TextRegular>
+        <TextRegular style={{ ...styles.title, backgroundColor: '#fff' }}>
+          Вот что удалось найти
+        </TextRegular>
       ) : null}
       {timetable.length ? (
         <View style={styles.timetableContainer}>
@@ -47,10 +51,11 @@ export const ResultScreen = () => {
                     <View style={styles.left}>
                       <View style={styles.textLeft}>
                         <TextBold style={{ color: '#fff' }}>
-                          {item.startTime}
+                          {item.startTime.getHours()}.
+                          {item.startTime.getMinutes()}
                         </TextBold>
                         <TextRegular style={{ color: '#fff' }}>
-                          {item.endTime}
+                          {item.endTime.getHours()}.{item.endTime.getMinutes()}
                         </TextRegular>
                       </View>
                     </View>
@@ -177,7 +182,7 @@ export const ResultScreen = () => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 20,
-    marginVertical: 12,
+    paddingVertical: 12,
     textAlign: 'center',
   },
 
@@ -246,7 +251,7 @@ const styles = StyleSheet.create({
   },
 
   footer: {
-    flexDirection: 'row',
+    flexDirection: Dimensions.get('screen').width > 1120 ? 'row' : 'column',
     marginTop: 30,
     marginHorizontal: 16,
     justifyContent: 'space-between',

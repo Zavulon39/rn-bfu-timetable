@@ -49,7 +49,10 @@ export const MainScreen = () => {
         >
           <Feather name='star' size={26} color='white' />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => screenManager.navigate('History')}
+        >
           <FontAwesome5 name='history' size={24} color='white' />
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.8}>

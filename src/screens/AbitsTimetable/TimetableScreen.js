@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   View,
   StyleSheet,
@@ -17,7 +17,9 @@ import screenManager from '../../store/screenManager'
 import abitsTimetable from '../../store/abitsTimetable'
 import { THEME } from '../../theme'
 import { favoriteDB } from '../../favoriteDB'
+import { historyDB } from '../../historyDB'
 import favorite from '../../store/favorite'
+import history from '../../store/history'
 
 export const TimetableScreen = () => {
   const institutTitle = screenManager.getParam('institutTitle')
@@ -60,6 +62,7 @@ export const TimetableScreen = () => {
     'Ноября',
     'Декабря',
   ]
+
   favoriteDB.getFavorite().then(arr => {
     arr.forEach(prev => {
       el = JSON.parse(prev.data)
@@ -69,6 +72,20 @@ export const TimetableScreen = () => {
       }
     })
   })
+  const historyItem = {
+    type: 'group',
+    data: {
+      TLTitle,
+      institutTitle,
+      groupTitle,
+    },
+  }
+  historyDB
+    .add(JSON.stringify(historyItem))
+    .then()
+    .catch(e => {})
+  historyDB.getHistory().then(histories => history.setData(histories))
+
   const showDatePicker = async () => {
     if (Platform.OS === 'android') {
       try {
@@ -103,7 +120,6 @@ export const TimetableScreen = () => {
       }
     }
   }
-
   return (
     <ScrollView style={{ backgroundColor: THEME.GRAY_COLOR }}>
       <Header
@@ -155,10 +171,10 @@ export const TimetableScreen = () => {
                 <View style={styles.left}>
                   <View style={styles.textLeft}>
                     <TextBold style={{ color: '#fff' }}>
-                      {item.startTime}
+                      {item.startTime.getHours()}.{item.startTime.getMinutes()}
                     </TextBold>
                     <TextRegular style={{ color: '#fff' }}>
-                      {item.endTime}
+                      {item.endTime.getHours()}.{item.endTime.getMinutes()}
                     </TextRegular>
                   </View>
                 </View>
@@ -259,7 +275,7 @@ const styles = StyleSheet.create({
   },
 
   footer: {
-    flexDirection: 'row',
+    flexDirection: Dimensions.get('screen').width > 1120 ? 'row' : 'column',
     marginTop: 30,
     marginHorizontal: 16,
     justifyContent: 'space-between',
