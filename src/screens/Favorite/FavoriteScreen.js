@@ -26,11 +26,11 @@ export const FavoriteScreen = observer(() => {
   const showAlert = (title, idx) => {
     Alert.alert('Удалить группу?', `Удалить группу ${title} из избранного?`, [
       {
-        text: 'Cancel',
+        text: 'Отменить',
         style: 'cancel',
       },
       {
-        text: 'OK',
+        text: 'Ок',
         onPress: async () => {
           await favoriteDB.del(idx)
           const favorites = await favoriteDB.getFavorite()
