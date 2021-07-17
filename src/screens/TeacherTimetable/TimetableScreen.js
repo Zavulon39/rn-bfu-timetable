@@ -106,7 +106,7 @@ export const TimetableScreen = () => {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: THEME.GRAY_COLOR }}>
+    <ScrollView>
       <Header title='Расписание' prevLink='TeacherTeacher' />
       <View style={styles.titleContainer}>
         <TextRegular style={styles.title}>
@@ -196,7 +196,6 @@ const styles = StyleSheet.create({
 
   timetableContainer: {
     marginTop: 8,
-    backgroundColor: THEME.GRAY_COLOR,
     height: '100%',
   },
 
@@ -225,6 +224,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomRightRadius: 8,
     borderTopRightRadius: 8,
+    borderRightWidth: 0.5,
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderColor: THEME.GRAY_COLOR,
   },
 
   type: {

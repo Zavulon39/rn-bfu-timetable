@@ -55,7 +55,10 @@ export const MainScreen = () => {
         >
           <FontAwesome5 name='history' size={24} color='white' />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.8}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => screenManager.navigate('GlobalSearch')}
+        >
           <FontAwesome name='search' size={24} color='white' />
         </TouchableOpacity>
       </View>

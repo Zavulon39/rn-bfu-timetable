@@ -11,6 +11,7 @@ import { TeacherScreen as SearchGroupTeacherScreen } from '../screens/SearchGrou
 import { ResultScreen } from '../screens/SearchGroup/ResultScreen'
 import { FavoriteScreen } from '../screens/Favorite/FavoriteScreen'
 import { HistoryScreen } from '../screens/History/HistoryScreen'
+import { GlobalSearchScreen } from '../screens/GlobalSearch/GlobalSearchScreen'
 
 export const useRouter = route => {
   switch (route) {
@@ -38,6 +39,8 @@ export const useRouter = route => {
       return <FavoriteScreen />
     case 'History':
       return <HistoryScreen />
+    case 'GlobalSearch':
+      return <GlobalSearchScreen />
     default:
       return null
   }

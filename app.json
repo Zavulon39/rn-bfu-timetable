@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/image/favicon.png",
+        "foregroundImage": "./assets/image/adaptive-favicon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.kantiana.timetable"

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  Alert,
 } from 'react-native'
 import { TextRegular } from '../../components/ui/Text'
 import { Header } from '../../components/Header'
@@ -20,20 +21,30 @@ import { THEME } from '../../theme'
 export const HistoryScreen = observer(() => {
   const data = history.data.map(el => JSON.parse(el.data))
 
+  const clearHistory = async () => {
+    Alert.alert('Очистить историю?', `Очистить историю поиска?`, [
+      {
+        text: 'Отменить',
+        style: 'cancel',
+      },
+      {
+        text: 'Ок',
+        onPress: async () => {
+          await historyDB.clear()
+          const histories = await historyDB.getHistory()
+          history.setData(histories)
+        },
+      },
+    ])
+  }
+
   return (
     <ScrollView>
       <Header
         title='История'
         prevLink='Main'
         headerRight={
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={async () => {
-              await historyDB.clear()
-              const histories = await historyDB.getHistory()
-              history.setData(histories)
-            }}
-          >
+          <TouchableOpacity activeOpacity={0.8} onPress={clearHistory}>
             <FontAwesome name='trash-o' size={25} color='white' />
           </TouchableOpacity>
         }

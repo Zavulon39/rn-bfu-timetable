@@ -24,14 +24,12 @@ export const ResultScreen = () => {
     ? 'Вот что удалось найти'
     : 'Ничего не удалось найти :('
 
-  // screenManager.params.searchGroupTime = null
-  // screenManager.params.searchGroupSubject = null
-  // screenManager.params.searchGroupTeacher = null
+  screenManager.params.searchGroupTime = null
+  screenManager.params.searchGroupSubject = null
+  screenManager.params.searchGroupTeacher = null
 
   return (
-    <ScrollView
-      style={timetable.length ? { backgroundColor: THEME.GRAY_COLOR } : {}}
-    >
+    <ScrollView>
       <Header title={title} prevLink='AbitsGroup' />
       {timetable.length ? (
         <TextRegular style={{ ...styles.title, backgroundColor: '#fff' }}>
@@ -135,6 +133,7 @@ export const ResultScreen = () => {
           </TextRegular>
           <TouchableOpacity
             activeOpacity={0.8}
+            onPress={() => screenManager.navigate('GlobalSearch')}
             style={{
               width: 328,
               height: 36,
@@ -187,7 +186,6 @@ const styles = StyleSheet.create({
   },
 
   timetableContainer: {
-    backgroundColor: THEME.GRAY_COLOR,
     height: '100%',
   },
 
@@ -215,6 +213,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomRightRadius: 8,
     borderTopRightRadius: 8,
+    borderRightWidth: 0.5,
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderColor: THEME.GRAY_COLOR,
   },
 
   type: {
