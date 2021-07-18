@@ -51,6 +51,7 @@ class AbitsTimetable {
         for (const el of g[1]) {
           el.group = g[0]
           el.tl = j[0]
+          el.institut = institut
 
           if (subject && teacher) {
             if (
@@ -104,6 +105,7 @@ class AbitsTimetable {
           for (const el of g[1]) {
             el.group = g[0]
             el.tl = j[0]
+            el.institut = institut[0]
 
             if (
               el.title.toLowerCase().indexOf(subject.toLowerCase()) + 1 ||
@@ -140,6 +142,7 @@ class AbitsTimetable {
           for (const el of g[1]) {
             el.group = g[0]
             el.tl = j[0]
+            el.institut = institut[0]
 
             const cond = time
               ? time &&

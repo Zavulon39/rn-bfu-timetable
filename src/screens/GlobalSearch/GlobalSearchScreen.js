@@ -175,9 +175,15 @@ export const GlobalSearchScreen = () => {
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() => {
+                        console.log({
+                          institutTitle: item.tl,
+                          groupTitle: item.group,
+                          item: item.institut,
+                        })
                         screenManager.navigate('AbitsTimetable', {
                           institutTitle: item.tl,
                           groupTitle: item.group,
+                          item: item.institut,
                         })
                       }}
                     >
