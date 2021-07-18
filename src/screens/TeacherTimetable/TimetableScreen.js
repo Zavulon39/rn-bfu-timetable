@@ -19,12 +19,16 @@ import screenManager from '../../store/screenManager'
 import abitsTimetable from '../../store/abitsTimetable'
 import { THEME } from '../../theme'
 import { historyDB } from '../../historyDB'
+import { favoriteDB } from '../../favoriteDB'
 import history from '../../store/history'
+import favorite from '../../store/favorite'
 
 export const TimetableScreen = () => {
   const teacher = screenManager.getParam('teacher')
   const [date, setDate] = useState(new Date(Date.now()))
   const [modal, setModal] = useState(false)
+  const [icon, setIcon] = useState('staro')
+  const [id, setId] = useState(null)
   const [timetable, setTimetable] = useState(
     abitsTimetable.getTeacherTimetable(teacher).filter(el => {
       return (
@@ -57,6 +61,15 @@ export const TimetableScreen = () => {
     'Ноября',
     'Декабря',
   ]
+  favoriteDB.getFavorite().then(arr => {
+    arr.forEach(prev => {
+      el = JSON.parse(prev.data)
+      if (teacher === el.teacher) {
+        setIcon('star')
+        setId(prev.id)
+      }
+    })
+  })
 
   const historyItem = {
     type: 'teacher',
@@ -107,7 +120,32 @@ export const TimetableScreen = () => {
 
   return (
     <ScrollView>
-      <Header title='Расписание' prevLink='TeacherTeacher' />
+      <Header
+        title='Расписание'
+        prevLink='TeacherTeacher'
+        headerRight={
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={async () => {
+              if (icon === 'staro') {
+                const data = JSON.stringify({
+                  type: 'teacher',
+                  teacher,
+                })
+                await favoriteDB.add(data)
+                setIcon('star')
+              } else {
+                await favoriteDB.del(id)
+                setIcon('staro')
+              }
+              const favorites = await favoriteDB.getFavorite()
+              favorite.setData(favorites)
+            }}
+          >
+            <AntDesign name={icon} size={25} color='white' />
+          </TouchableOpacity>
+        }
+      />
       <View style={styles.titleContainer}>
         <TextRegular style={styles.title}>
           {date.getDate()} {month[date.getMonth()]}, {days[date.getDay()]}

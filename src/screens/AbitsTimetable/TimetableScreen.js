@@ -131,6 +131,7 @@ export const TimetableScreen = () => {
             onPress={async () => {
               if (icon === 'staro') {
                 const data = JSON.stringify({
+                  type: 'group',
                   TLTitle,
                   institutTitle,
                   groupTitle,

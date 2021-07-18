@@ -55,7 +55,6 @@ export const HistoryScreen = observer(() => {
           data={data}
           keyExtractor={item => `${item.type}${Math.random() * Math.random()}`}
           renderItem={({ item }) => {
-            console.log(item)
             if (item.type === 'group') {
               return (
                 <TouchableOpacity
@@ -114,6 +113,7 @@ export const HistoryScreen = observer(() => {
           </TextRegular>
         </View>
       )}
+      <View style={{ height: 20 }} />
     </ScrollView>
   )
 })

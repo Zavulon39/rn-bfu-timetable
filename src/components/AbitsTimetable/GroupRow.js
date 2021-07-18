@@ -10,8 +10,6 @@ export const GroupRow = ({ data, setActive }) => {
     rows[rows.length - 1].push(el)
   })
 
-  // rows.forEach(el => console.log(el))
-
   return (
     <FlatList
       style={styles.list}

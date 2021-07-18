@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 8,
     marginVertical: 8,
+    marginLeft: -6,
   },
 
   ttTitle: {

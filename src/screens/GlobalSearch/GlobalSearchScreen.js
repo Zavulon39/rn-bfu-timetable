@@ -6,15 +6,17 @@ import {
   Keyboard,
   FlatList,
   Dimensions,
+  TouchableOpacity,
   Image,
 } from 'react-native'
 import { Header } from '../../components/Header'
 import { TextInput } from 'react-native-paper'
 import { THEME } from '../../theme'
-import abitsTimetable from '../../store/abitsTimetable'
-import teachers from '../../store/teachers'
 import { TextRegular, TextBold } from '../../components/ui/Text'
 import { ConfigModal } from '../../components/GlobalSearch/ConfigModal'
+import abitsTimetable from '../../store/abitsTimetable'
+import teachers from '../../store/teachers'
+import screenManager from '../../store/screenManager'
 
 export const GlobalSearchScreen = () => {
   const [modal, setModal] = useState(false)
@@ -88,14 +90,35 @@ export const GlobalSearchScreen = () => {
             keyExtractor={item => item}
             renderItem={({ item }) => {
               return (
-                <View style={styles.teacherItem}>
-                  <TextRegular style={styles.teacherTitle}>
-                    {item.teacher}
-                  </TextRegular>
-                  <TextRegular style={styles.institut}>
-                    {item.institut}
-                  </TextRegular>
-                </View>
+                <>
+                  <View style={styles.teacherItem}>
+                    <TextRegular style={styles.teacherTitle}>
+                      {item.teacher}
+                    </TextRegular>
+                    <TextRegular style={styles.institut}>
+                      {item.institut}
+                    </TextRegular>
+                  </View>
+                  <View
+                    style={{
+                      marginRight: 16,
+                      alignItems: 'flex-end',
+                    }}
+                  >
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={() => {
+                        screenManager.navigate('TeacherTimetable', {
+                          teacher: item.teacher,
+                        })
+                      }}
+                    >
+                      <TextRegular style={styles.goTitle}>
+                        Перейти к расписанию
+                      </TextRegular>
+                    </TouchableOpacity>
+                  </View>
+                </>
               )
             }}
           />
@@ -107,38 +130,63 @@ export const GlobalSearchScreen = () => {
             keyExtractor={item => `${item.title}${Math.random()}`}
             renderItem={({ item }) => {
               return (
-                <View style={styles.timetable}>
-                  <View style={styles.left}>
-                    <View style={styles.textLeft}>
-                      <TextBold style={{ color: '#fff' }}>
-                        {item.startTime.getHours()}.
-                        {item.startTime.getMinutes()}
-                      </TextBold>
-                      <TextRegular style={{ color: '#fff' }}>
-                        {item.endTime.getHours()}.{item.endTime.getMinutes()}
+                <>
+                  <View style={styles.timetable}>
+                    <View style={styles.left}>
+                      <View style={styles.textLeft}>
+                        <TextBold style={{ color: '#fff' }}>
+                          {item.startTime.getHours()}.
+                          {item.startTime.getMinutes()}
+                        </TextBold>
+                        <TextRegular style={{ color: '#fff' }}>
+                          {item.endTime.getHours()}.{item.endTime.getMinutes()}
+                        </TextRegular>
+                      </View>
+                    </View>
+                    <View style={styles.right}>
+                      <View style={{ flexDirection: 'row' }}>
+                        <TextRegular style={styles.type}>
+                          {item.type}
+                        </TextRegular>
+                        <TextRegular style={{ ...styles.type, marginLeft: -6 }}>
+                          {item.group}
+                        </TextRegular>
+                      </View>
+                      <TextRegular style={styles.ttTitle}>
+                        {item.title}
                       </TextRegular>
+                      <View style={styles.footer}>
+                        <TextRegular style={{ fontSize: 12 }}>
+                          {item.teacher}
+                        </TextRegular>
+                        <TextRegular style={{ fontSize: 12 }}>
+                          {item.place}
+                        </TextRegular>
+                      </View>
                     </View>
                   </View>
-                  <View style={styles.right}>
-                    <View style={{ flexDirection: 'row' }}>
-                      <TextRegular style={styles.type}>{item.type}</TextRegular>
-                      <TextRegular style={{ ...styles.type, marginLeft: -6 }}>
-                        {item.group}
+                  <View
+                    style={{
+                      marginRight: 16,
+                      alignItems: 'flex-end',
+                      marginBottom: 12,
+                    }}
+                  >
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={() => {
+                        screenManager.navigate('AbitsTimetable', {
+                          institutTitle: item.tl,
+                          groupTitle: item.group,
+                        })
+                      }}
+                    >
+                      <TextRegular style={styles.goTitle}>
+                        Перейти к расписанию
                       </TextRegular>
-                    </View>
-                    <TextRegular style={styles.ttTitle}>
-                      {item.title}
-                    </TextRegular>
-                    <View style={styles.footer}>
-                      <TextRegular style={{ fontSize: 12 }}>
-                        {item.teacher}
-                      </TextRegular>
-                      <TextRegular style={{ fontSize: 12 }}>
-                        {item.place}
-                      </TextRegular>
-                    </View>
+                    </TouchableOpacity>
                   </View>
-                </View>
+                </>
               )
             }}
           />
@@ -198,7 +246,7 @@ const styles = StyleSheet.create({
 
   qsContainer: {
     marginHorizontal: 16,
-    marginTop: 22,
+    marginTop: 10,
   },
 
   h2: {
@@ -280,5 +328,10 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginHorizontal: 16,
     justifyContent: 'space-between',
+  },
+
+  goTitle: {
+    color: THEME.MAIN_COLOR,
+    fontSize: 13,
   },
 })
