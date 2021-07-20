@@ -32,6 +32,18 @@ export const GlobalSearchScreen = () => {
       return setQs({ pairs: [], teachers: [] })
     }
 
+    if (data === 'Zavulon') {
+      return setQs({
+        pairs: [],
+        teachers: [
+          {
+            teacher: 'Алексеев Михаил Михайлович',
+            institut: 'Разработчик',
+          },
+        ],
+      })
+    }
+
     const timetableQs = abitsTimetable.searchTimetable(null, data, data)
     const teacherQs = teachers.getFilteredData(data)
 
@@ -113,9 +125,11 @@ export const GlobalSearchScreen = () => {
                         })
                       }}
                     >
-                      <TextRegular style={styles.goTitle}>
-                        Перейти к расписанию
-                      </TextRegular>
+                      {text !== 'Zavulon' ? (
+                        <TextRegular style={styles.goTitle}>
+                          Перейти к расписанию
+                        </TextRegular>
+                      ) : null}
                     </TouchableOpacity>
                   </View>
                 </>
@@ -135,11 +149,16 @@ export const GlobalSearchScreen = () => {
                     <View style={styles.left}>
                       <View style={styles.textLeft}>
                         <TextBold style={{ color: '#fff' }}>
+                          {item.startTime.getHours() < 10 ? '0' : ''}
                           {item.startTime.getHours()}.
+                          {item.startTime.getMinutes() < 10 ? '0' : ''}
                           {item.startTime.getMinutes()}
                         </TextBold>
                         <TextRegular style={{ color: '#fff' }}>
-                          {item.endTime.getHours()}.{item.endTime.getMinutes()}
+                          {item.startTime.getHours() < 10 ? '0' : ''}
+                          {item.startTime.getHours()}.
+                          {item.startTime.getMinutes() < 10 ? '0' : ''}
+                          {item.startTime.getMinutes()}
                         </TextRegular>
                       </View>
                     </View>

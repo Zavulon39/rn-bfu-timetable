@@ -49,11 +49,16 @@ export const ResultScreen = () => {
                     <View style={styles.left}>
                       <View style={styles.textLeft}>
                         <TextBold style={{ color: '#fff' }}>
+                          {item.startTime.getHours() < 10 ? '0' : ''}
                           {item.startTime.getHours()}.
+                          {item.startTime.getMinutes() < 10 ? '0' : ''}
                           {item.startTime.getMinutes()}
                         </TextBold>
                         <TextRegular style={{ color: '#fff' }}>
-                          {item.endTime.getHours()}.{item.endTime.getMinutes()}
+                          {item.startTime.getHours() < 10 ? '0' : ''}
+                          {item.startTime.getHours()}.
+                          {item.startTime.getMinutes() < 10 ? '0' : ''}
+                          {item.startTime.getMinutes()}
                         </TextRegular>
                       </View>
                     </View>
