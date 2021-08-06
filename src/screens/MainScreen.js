@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 
   btnContainer: {
     alignItems: 'center',
-    marginBottom: 200,
+    marginBottom: Dimensions.get('window').height * 0.5 - 74 - 40,
   },
 
   btn: {

@@ -17,8 +17,8 @@ export const ConfigModal = ({ visible, close, setData }) => {
   const [subject, setSubject] = useState('')
   const [teacher, setTeacher] = useState('')
   const [time, setTime] = useState(null)
-  const [show, setShow] = useState(false)
   const [tl, setTl] = useState(teachingLevel.data[0])
+  const [show, setShow] = useState(false)
 
   const onChange = (event, selectedDate) => {
     if (event.type === 'set') {
@@ -138,7 +138,7 @@ export const ConfigModal = ({ visible, close, setData }) => {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => setData(time, subject, teacher, tl)}
+          onPress={() => setData(time, subject.trim(), teacher.trim(), tl)}
           style={styles.btn2}
         >
           <TextRegular style={styles.btn2Text}>Принять</TextRegular>
