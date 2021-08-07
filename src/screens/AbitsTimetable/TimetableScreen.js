@@ -167,6 +167,12 @@ export const TimetableScreen = () => {
           data={timetable}
           keyExtractor={item => `${item.title}${Math.random()}`}
           renderItem={({ item }) => {
+            if (item.type === 'Практические занятия') {
+              item.type = 'практика'
+            } else if (item.type === 'Лекционные занятия') {
+              item.type = 'лекция'
+            }
+            item.type = item.type.toLowerCase()
             return (
               <View style={styles.timetable}>
                 <View style={styles.left}>
@@ -186,7 +192,9 @@ export const TimetableScreen = () => {
                   </View>
                 </View>
                 <View style={styles.right}>
-                  <TextRegular style={styles.type}>{item.type}</TextRegular>
+                  <TextRegular style={styles.type}>
+                    {item.type === 'Практические занятия'}
+                  </TextRegular>
                   <TextRegular style={styles.ttTitle}>{item.title}</TextRegular>
                   <View style={styles.footer}>
                     <TextRegular style={{ fontSize: 12 }}>

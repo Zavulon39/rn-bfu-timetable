@@ -48,7 +48,7 @@ export const bootstrap = async () => {
           111222: [
             {
               title: 'Теория вероятностей и математическая статистика',
-              type: 'лекция',
+              type: 'Лекционнное занятие',
               startTime: new Date(Date.now()),
               endTime: new Date(Date.now() + 1000000),
               teacher: 'Роман Иванович Романов',
@@ -57,7 +57,7 @@ export const bootstrap = async () => {
             },
             {
               title: 'Теория вероятностей и математическая статистика',
-              type: 'лекция',
+              type: 'Лекционнное занятие',
               startTime: new Date(Date.now()),
               endTime: new Date(Date.now() + 1000000),
               teacher: 'Роман Иванович Романов',
@@ -66,7 +66,7 @@ export const bootstrap = async () => {
             },
             {
               title: 'Теория вероятностей и математическая статистика',
-              type: 'лекция',
+              type: 'Лекционнное занятие',
               startTime: new Date(Date.now()),
               endTime: new Date(Date.now() + 1000000),
               teacher: 'Иванов Иван Инванович',
@@ -77,7 +77,7 @@ export const bootstrap = async () => {
           222111: [
             {
               title: 'Теория вероятностей и математическая статистика',
-              type: 'лекция',
+              type: 'Лекционнное занятие',
               startTime: new Date(Date.now()),
               endTime: new Date(Date.now() + 1000000),
               teacher: 'Иванов Иван Инванович',
@@ -92,7 +92,7 @@ export const bootstrap = async () => {
         333444: [
           {
             title: 'Теория вероятностей и математическая статистика',
-            type: 'лекция',
+            type: 'Лекционнное занятие',
             startTime: new Date(Date.now()),
             endTime: new Date(Date.now() + 1000000),
             teacher: 'Иванов Иван Инванович',
@@ -101,7 +101,7 @@ export const bootstrap = async () => {
           },
           {
             title: 'Теория вероятностей и математическая статистика',
-            type: 'лекция',
+            type: 'Лекционнное занятие',
             startTime: new Date(Date.now()),
             endTime: new Date(Date.now() + 1000000),
             teacher: 'Иванов Иван Инванович',
@@ -112,7 +112,7 @@ export const bootstrap = async () => {
         4443333: [
           {
             title: 'Теория вероятностей и математическая статистика',
-            type: 'лекция',
+            type: 'Лекционнное занятие',
             startTime: new Date(Date.now()),
             endTime: new Date(Date.now() + 1000000),
             teacher: 'Роман Иванович Романов',
