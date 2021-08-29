@@ -166,11 +166,13 @@ const styles = StyleSheet.create({
 
   btnContainer: {
     position: 'absolute',
-    bottom: 40,
+    bottom: 0,
+    height: 70,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    backgroundColor: '#fff',
   },
 
   btn1: {

@@ -19,7 +19,10 @@ import { observer } from 'mobx-react-lite'
 import { THEME } from '../../theme'
 
 export const HistoryScreen = observer(() => {
-  const data = history.data.map(el => JSON.parse(el.data))
+  const data = history.data.map(el => {
+    console.log(JSON.parse(el.data))
+    return JSON.parse(el.data)
+  })
 
   const clearHistory = async () => {
     Alert.alert('Очистить историю?', `Очистить историю поиска?`, [
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
   },
 
   groupText: {
-    fontSize: 20,
+    fontSize: 14,
     color: '#fff',
     width: 156,
     textAlign: 'center',

@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 
 class Teachers {
-  data = {}
+  data = []
 
   constructor() {
     makeAutoObservable(this)

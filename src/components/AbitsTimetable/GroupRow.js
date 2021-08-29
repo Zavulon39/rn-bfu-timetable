@@ -6,7 +6,7 @@ import { THEME } from '../../theme'
 export const GroupRow = ({ data, setActive }) => {
   const rows = []
   data.forEach((el, idx) => {
-    if (idx % 3 === 0) rows.push([])
+    if (idx % 1 === 0) rows.push([])
     rows[rows.length - 1].push(el)
   })
 
@@ -66,12 +66,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     width: '100%',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
 
   list: {
     marginHorizontal: 32,
-    marginTop: 24,
   },
 })

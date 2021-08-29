@@ -167,7 +167,9 @@ export const GlobalSearchScreen = () => {
                         <TextRegular style={styles.type}>
                           {item.type}
                         </TextRegular>
-                        <TextRegular style={{ ...styles.type, marginLeft: -6 }}>
+                        <TextRegular
+                          style={{ ...styles.group, marginLeft: -6 }}
+                        >
                           {item.group}
                         </TextRegular>
                       </View>
@@ -337,6 +339,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    borderRadius: 8,
+    marginHorizontal: 16,
+    marginVertical: 8,
+  },
+
+  group: {
+    color: '#fff',
+    backgroundColor: THEME.SECONDARY_COLOR,
+    fontSize: 11,
+    height: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    paddingHorizontal: 8,
+    padding: 2,
     borderRadius: 8,
     marginHorizontal: 16,
     marginVertical: 8,
