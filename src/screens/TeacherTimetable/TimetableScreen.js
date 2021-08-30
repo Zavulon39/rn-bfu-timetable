@@ -11,6 +11,7 @@ import {
   FlatList,
   Dimensions,
   ScrollView,
+  Image,
 } from 'react-native'
 import { Header } from '../../components/Header'
 import { TextRegular, TextBold } from '../../components/ui/Text'
@@ -158,46 +159,64 @@ export const TimetableScreen = () => {
           <MaterialIcons name='date-range' size={24} color='white' />
         </TouchableOpacity>
       </View>
-      <View style={styles.timetableContainer}>
-        <FlatList
-          data={timetable}
-          keyExtractor={item => `${item.title}${Math.random()}`}
-          renderItem={({ item }) => {
-            return (
-              <View style={styles.timetable}>
-                <View style={styles.left}>
-                  <View style={styles.textLeft}>
-                    <TextBold style={{ color: '#fff' }}>
-                      {item.startTime.getHours() < 10 ? '0' : ''}
-                      {item.startTime.getHours()}.
-                      {item.startTime.getMinutes() < 10 ? '0' : ''}
-                      {item.startTime.getMinutes()}
-                    </TextBold>
-                    <TextRegular style={{ color: '#fff' }}>
-                      {item.startTime.getHours() < 10 ? '0' : ''}
-                      {item.startTime.getHours()}.
-                      {item.startTime.getMinutes() < 10 ? '0' : ''}
-                      {item.startTime.getMinutes()}
+      {timetable.length ? (
+        <View style={styles.timetableContainer}>
+          <FlatList
+            data={timetable}
+            keyExtractor={item => `${item.title}${Math.random()}`}
+            renderItem={({ item }) => {
+              return (
+                <View style={styles.timetable}>
+                  <View style={styles.left}>
+                    <View style={styles.textLeft}>
+                      <TextBold style={{ color: '#fff' }}>
+                        {item.startTime.getHours() < 10 ? '0' : ''}
+                        {item.startTime.getHours()}.
+                        {item.startTime.getMinutes() < 10 ? '0' : ''}
+                        {item.startTime.getMinutes()}
+                      </TextBold>
+                      <TextRegular style={{ color: '#fff' }}>
+                        {item.endTime.getHours() < 10 ? '0' : ''}
+                        {item.endTime.getHours()}.
+                        {item.endTime.getMinutes() < 10 ? '0' : ''}
+                        {item.endTime.getMinutes()}
+                      </TextRegular>
+                    </View>
+                  </View>
+                  <View style={styles.right}>
+                    <TextRegular style={styles.type}>{item.type}</TextRegular>
+                    <TextRegular style={styles.ttTitle}>
+                      {item.title}
                     </TextRegular>
+                    <View style={styles.footer}>
+                      <TextRegular style={{ fontSize: 12 }}>
+                        {item.teacher}
+                      </TextRegular>
+                      <TextRegular style={{ fontSize: 12 }}>
+                        {item.place}
+                      </TextRegular>
+                    </View>
                   </View>
                 </View>
-                <View style={styles.right}>
-                  <TextRegular style={styles.type}>{item.type}</TextRegular>
-                  <TextRegular style={styles.ttTitle}>{item.title}</TextRegular>
-                  <View style={styles.footer}>
-                    <TextRegular style={{ fontSize: 12 }}>
-                      {item.teacher}
-                    </TextRegular>
-                    <TextRegular style={{ fontSize: 12 }}>
-                      {item.place}
-                    </TextRegular>
-                  </View>
-                </View>
-              </View>
-            )
-          }}
-        />
-      </View>
+              )
+            }}
+          />
+        </View>
+      ) : (
+        <View style={{ alignItems: 'center' }}>
+          <Image
+            source={require('../../../assets/image/not_found.png')}
+            style={{
+              width: 250,
+              height: 250,
+              marginTop: 32,
+            }}
+          />
+          <TextRegular style={{ marginTop: 24, fontSize: 20 }}>
+            На этот день занятий нет
+          </TextRegular>
+        </View>
+      )}
       <View style={{ height: 20 }}></View>
       <Modal
         animationType='slide'
@@ -278,7 +297,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     backgroundColor: THEME.SECONDARY_COLOR,
     fontSize: 11,
-    width: 70,
+    width: 80,
     height: 18,
     alignItems: 'center',
     justifyContent: 'center',
@@ -296,7 +315,8 @@ const styles = StyleSheet.create({
 
   footer: {
     flexDirection: Dimensions.get('screen').width > 1120 ? 'row' : 'column',
-    marginTop: 30,
+    position: 'absolute',
+    bottom: 4,
     marginHorizontal: 16,
     justifyContent: 'space-between',
   },

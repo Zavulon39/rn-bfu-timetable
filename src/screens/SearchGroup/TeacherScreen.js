@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from 'react-native'
 import { Header } from '../../components/Header'
-import { TextRegular } from '../../components/ui/Text'
+import { TextBold, TextRegular } from '../../components/ui/Text'
 import { TextInput } from 'react-native-paper'
 import screenManager from '../../store/screenManager'
 import { THEME } from '../../theme'
@@ -30,6 +30,8 @@ export const TeacherScreen = () => {
         return el
       })
   )
+
+  console.log(teachers)
 
   const search = data => {
     setText(data)
@@ -80,7 +82,10 @@ export const TeacherScreen = () => {
       </View>
       <FlatList
         data={teachers}
-        keyExtractor={item => item.teacher}
+        keyExtractor={item => {
+          console.log(item.teacher + item.institut)
+          return item.teacher + item.institut
+        }}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
@@ -88,11 +93,18 @@ export const TeacherScreen = () => {
               style={item.active ? styles.item : styles.inActive}
               onPress={() => setActive(item.teacher)}
             >
-              <TextRegular
-                style={{ color: item.active ? '#fff' : '#000', fontSize: 16 }}
-              >
-                {item.teacher}
-              </TextRegular>
+              <View>
+                <TextBold
+                  style={{ color: item.active ? '#fff' : '#000', fontSize: 16 }}
+                >
+                  {item.teacher}
+                </TextBold>
+                <TextRegular
+                  style={{ color: item.active ? '#fff' : '#000', fontSize: 12 }}
+                >
+                  {item.institut}
+                </TextRegular>
+              </View>
             </TouchableOpacity>
           )
         }}

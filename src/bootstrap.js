@@ -37,9 +37,9 @@ const BASE_URL = 'https://schedule.kantiana.ru'
 
 export const bootstrap = async () => {
   let d = new Date(Date.now())
-  d = new Date(d.getYear(), d.getMonth(), d.getDate())
+  d = new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0)
 
-  let resp = await fetch(BASE_URL + '/get_timetable/?start=' + d.toString())
+  let resp = await fetch(BASE_URL + '/get_timetable/?start=' + d.toJSON())
   let data = await resp.json()
   abitsTimetable.setData(parseTimetable(data))
 

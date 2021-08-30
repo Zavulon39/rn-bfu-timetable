@@ -55,10 +55,10 @@ export const ResultScreen = () => {
                           {item.startTime.getMinutes()}
                         </TextBold>
                         <TextRegular style={{ color: '#fff' }}>
-                          {item.startTime.getHours() < 10 ? '0' : ''}
-                          {item.startTime.getHours()}.
-                          {item.startTime.getMinutes() < 10 ? '0' : ''}
-                          {item.startTime.getMinutes()}
+                          {item.endTime.getHours() < 10 ? '0' : ''}
+                          {item.endTime.getHours()}.
+                          {item.endTime.getMinutes() < 10 ? '0' : ''}
+                          {item.endTime.getMinutes()}
                         </TextRegular>
                       </View>
                     </View>
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     backgroundColor: THEME.SECONDARY_COLOR,
     fontSize: 11,
-    width: 70,
+    width: 80,
     height: 18,
     alignItems: 'center',
     justifyContent: 'center',
@@ -242,7 +242,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     backgroundColor: THEME.SECONDARY_COLOR,
     fontSize: 11,
-    width: 70,
     height: 18,
     alignItems: 'center',
     justifyContent: 'center',
@@ -260,7 +259,8 @@ const styles = StyleSheet.create({
 
   footer: {
     flexDirection: Dimensions.get('screen').width > 1120 ? 'row' : 'column',
-    marginTop: 30,
+    position: 'absolute',
+    bottom: 4,
     marginHorizontal: 16,
     justifyContent: 'space-between',
   },
