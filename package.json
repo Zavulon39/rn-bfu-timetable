@@ -25,5 +25,19 @@
   "devDependencies": {
     "@babel/core": "^7.9.0"
   },
-  "private": true
+  "private": true,
+  "name": "rn-bfu-timetable",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zavulon39/rn-bfu-timetable.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zavulon39/rn-bfu-timetable/issues"
+  },
+  "homepage": "https://github.com/Zavulon39/rn-bfu-timetable#readme",
+  "description": ""
 }

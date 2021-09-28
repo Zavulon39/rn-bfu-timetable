@@ -68,12 +68,13 @@ export const FavoriteScreen = observer(() => {
             renderItem={({ item }) => {
               if (JSON.parse(item.data).type === 'teacher') {
                 const { teacher } = JSON.parse(item.data)
+                const res = teachers.data.find(el => el.teacher === teacher) || {institut: '---'}
                 return (
                   <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.teacher}
                     onPress={() => {
-                      screenManager.navigate('TeacherTimetable', { teacher })
+                      screenManager.navigate('TeacherTimetable', { teacher, prevScreen: 'Favorite' })
                     }}
                     onLongPress={() => showAlertTeacher(teacher, item.id)}
                   >
@@ -82,8 +83,7 @@ export const FavoriteScreen = observer(() => {
                     </TextRegular>
                     <TextRegular style={styles.institutText}>
                       {
-                        teachers.data.find(el => el.teacher === teacher)
-                          .institut
+                        res.institut
                       }
                     </TextRegular>
                   </TouchableOpacity>
@@ -112,6 +112,7 @@ export const FavoriteScreen = observer(() => {
                         institutTitle,
                         groupTitle,
                         item: TLTitle,
+                        prevScreen: 'Favorite'
                       })
                     }}
                     onLongPress={() => showAlertGroup(groupTitle, item.id)}

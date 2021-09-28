@@ -122,6 +122,7 @@ export const GlobalSearchScreen = () => {
                       onPress={() => {
                         screenManager.navigate('TeacherTimetable', {
                           teacher: item.teacher,
+                          prevScreen: 'GlobalSearch'
                         })
                       }}
                     >
@@ -196,15 +197,11 @@ export const GlobalSearchScreen = () => {
                     <TouchableOpacity
                       activeOpacity={0.8}
                       onPress={() => {
-                        console.log({
-                          institutTitle: item.tl,
-                          groupTitle: item.group,
-                          item: item.institut,
-                        })
                         screenManager.navigate('AbitsTimetable', {
                           institutTitle: item.tl,
                           groupTitle: item.group,
                           item: item.institut,
+                          prevScreen: 'GlobalSearch'
                         })
                       }}
                     >
@@ -301,7 +298,7 @@ const styles = StyleSheet.create({
   timetable: {
     flexDirection: 'row',
     marginTop: 8,
-    height: 138,
+    minHeight: 138,
     borderBottomRightRadius: 8,
     borderTopRightRadius: 8,
   },
@@ -367,8 +364,7 @@ const styles = StyleSheet.create({
 
   footer: {
     flexDirection: Dimensions.get('screen').width > 1120 ? 'row' : 'column',
-    position: 'absolute',
-    bottom: 4,
+    marginTop: 10,
     marginHorizontal: 16,
     justifyContent: 'space-between',
   },

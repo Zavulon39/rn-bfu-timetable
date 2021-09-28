@@ -20,7 +20,6 @@ import { THEME } from '../../theme'
 
 export const HistoryScreen = observer(() => {
   const data = history.data.map(el => {
-    console.log(JSON.parse(el.data))
     return JSON.parse(el.data)
   })
 
@@ -69,6 +68,7 @@ export const HistoryScreen = observer(() => {
                       institutTitle,
                       groupTitle,
                       item: TLTitle,
+                      prevScreen: 'History'
                     })
                   }}
                 >
@@ -78,13 +78,14 @@ export const HistoryScreen = observer(() => {
                 </TouchableOpacity>
               )
             } else {
+              const res = teachers.data.find(el => el.teacher === item.data.teacher) || {institut: '---'}
               return (
                 <TouchableOpacity
                   activeOpacity={0.8}
                   style={styles.teacher}
                   onPress={() => {
                     const { teacher } = item.data
-                    screenManager.navigate('TeacherTimetable', { teacher })
+                    screenManager.navigate('TeacherTimetable', { teacher, prevScreen: 'History' })
                   }}
                 >
                   <TextRegular style={styles.teacherText}>
@@ -92,8 +93,7 @@ export const HistoryScreen = observer(() => {
                   </TextRegular>
                   <TextRegular style={styles.institutText}>
                     {
-                      teachers.data.find(el => el.teacher === item.data.teacher)
-                        .institut
+                      res.institut
                     }
                   </TextRegular>
                 </TouchableOpacity>
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   },
 
   groupText: {
+    padding: 8,
     fontSize: 14,
     color: '#fff',
     width: 156,

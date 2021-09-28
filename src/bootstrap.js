@@ -55,6 +55,11 @@ export const bootstrap = async () => {
   data = await resp.json()
   teachingLevel.setData(data)
 
+  // abitsTimetable.setData({})
+  // teachers.setData([])
+  // subjects.setData([])
+  // teachingLevel.setData([])
+
   await favoriteDB.init()
   await historyDB.init()
   const favorites = await favoriteDB.getFavorite()

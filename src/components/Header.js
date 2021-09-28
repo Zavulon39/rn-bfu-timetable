@@ -19,8 +19,12 @@ export const Header = ({
 }) => {
   const height =
     (Dimensions.get('screen').height - Dimensions.get('window').height) / 2
+  prevLink = screenManager.params.prevScreen || prevLink
 
-  const navigateToPrev = () => screenManager.navigate(prevLink, params)
+  const navigateToPrev = () => {
+    screenManager.params.prevScreen = null
+    screenManager.navigate(prevLink, params)
+  }
 
   BackHandler.addEventListener('hardwareBackPress', () => {
     navigateToPrev()

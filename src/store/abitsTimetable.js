@@ -17,7 +17,11 @@ class AbitsTimetable {
   }
 
   getTimetable(TLTitle, institutTitle, groupTitle) {
-    return this.data[TLTitle][institutTitle][groupTitle]
+    try {
+      return this.data[TLTitle][institutTitle][groupTitle]
+    } catch (e) {
+      return []
+    }
   }
 
   getTeacherTimetable(teacher) {

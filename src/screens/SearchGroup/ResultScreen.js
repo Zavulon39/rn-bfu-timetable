@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
 
   timetable: {
     flexDirection: 'row',
-    height: 138,
+    minHeight: 138,
     paddingHorizontal: 16,
   },
 
@@ -259,8 +259,7 @@ const styles = StyleSheet.create({
 
   footer: {
     flexDirection: Dimensions.get('screen').width > 1120 ? 'row' : 'column',
-    position: 'absolute',
-    bottom: 4,
+    marginTop: 10,
     marginHorizontal: 16,
     justifyContent: 'space-between',
   },
