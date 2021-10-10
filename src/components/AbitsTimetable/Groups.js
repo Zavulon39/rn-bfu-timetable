@@ -42,7 +42,7 @@ export const Groups = ({ _item }) => {
                   <TouchableOpacity
                     activeOpacity={0.8}
                     style={styles.item}
-                    key={`${el.title}0`}
+                    key={`${el.title}`}
                     onPress={() => clickHandler(el.title)}
                   >
                     <TextRegular style={styles.title}>{el.title}</TextRegular>
@@ -70,11 +70,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
-    margin: 4,
+    marginHorizontal: 16,
+    width: 156,
+    height: 40,
+    marginTop: 8,
   },
 
   title: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#fff',
     width: 156,
     textAlign: 'center',

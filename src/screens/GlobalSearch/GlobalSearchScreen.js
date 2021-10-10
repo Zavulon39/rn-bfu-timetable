@@ -1,22 +1,17 @@
 import React, { useState } from 'react'
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Keyboard,
-  FlatList,
-  Dimensions,
-  TouchableOpacity,
-  Image,
-} from 'react-native'
+import { View, StyleSheet, ScrollView, Keyboard, FlatList } from 'react-native'
 import { Header } from '../../components/Header'
 import { TextInput } from 'react-native-paper'
 import { THEME } from '../../theme'
-import { TextRegular, TextBold } from '../../components/ui/Text'
+import { TextRegular } from '../../components/ui/Text'
 import { ConfigModal } from '../../components/GlobalSearch/ConfigModal'
+import { TimetableLinkCard } from '../../components/TimetableCard'
+import { TeacherLinkCard } from '../../components/TeacherCard'
+import { NotFound } from '../../components/NotFound'
 import abitsTimetable from '../../store/abitsTimetable'
 import teachers from '../../store/teachers'
 import screenManager from '../../store/screenManager'
+import { GroupCard } from '../../components/GroupCard'
 
 export const GlobalSearchScreen = () => {
   const [modal, setModal] = useState(false)
@@ -24,12 +19,13 @@ export const GlobalSearchScreen = () => {
   const [qs, setQs] = useState({
     pairs: [],
     teachers: [],
+    groups: [],
   })
 
   const search = data => {
     setText(data)
     if (!data.trim()) {
-      return setQs({ pairs: [], teachers: [] })
+      return setQs({ pairs: [], teachers: [], groups: [] })
     }
 
     if (data === 'Zavulon') {
@@ -41,15 +37,18 @@ export const GlobalSearchScreen = () => {
             institut: 'Разработчик',
           },
         ],
+        groups: [],
       })
     }
 
     const timetableQs = abitsTimetable.searchTimetable(null, data, data)
     const teacherQs = teachers.getFilteredData(data)
+    const groupQs = abitsTimetable.searchGroup(data)
 
     setQs({
       pairs: timetableQs,
       teachers: teacherQs,
+      groups: groupQs,
     })
   }
 
@@ -94,46 +93,37 @@ export const GlobalSearchScreen = () => {
           }
         />
       </View>
-      {qs.pairs.length || qs.teachers.length ? (
+      {qs.pairs.length || qs.teachers.length || qs.groups.length ? (
         <View style={styles.qsContainer}>
           <TextRegular style={styles.h2}>Преподаватели</TextRegular>
           <FlatList
             data={qs.teachers}
-            keyExtractor={item => item}
+            keyExtractor={item => `${item}`}
+            renderItem={({ item }) => {
+              return <TeacherLinkCard item={item} text={text} />
+            }}
+          />
+          <TextRegular style={{ ...styles.h2, marginTop: 16 }}>
+            Группы
+          </TextRegular>
+          <FlatList
+            data={qs.groups}
+            keyExtractor={item => `${item.group}`}
             renderItem={({ item }) => {
               return (
-                <>
-                  <View style={styles.teacherItem}>
-                    <TextRegular style={styles.teacherTitle}>
-                      {item.teacher}
-                    </TextRegular>
-                    <TextRegular style={styles.institut}>
-                      {item.institut}
-                    </TextRegular>
-                  </View>
-                  <View
-                    style={{
-                      marginRight: 16,
-                      alignItems: 'flex-end',
-                    }}
-                  >
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      onPress={() => {
-                        screenManager.navigate('TeacherTimetable', {
-                          teacher: item.teacher,
-                          prevScreen: 'GlobalSearch'
-                        })
-                      }}
-                    >
-                      {text !== 'Zavulon' ? (
-                        <TextRegular style={styles.goTitle}>
-                          Перейти к расписанию
-                        </TextRegular>
-                      ) : null}
-                    </TouchableOpacity>
-                  </View>
-                </>
+                <GroupCard
+                  item={{ data: { groupTitle: item.group } }}
+                  style={{ width: '100%', marginHorizontal: 0 }}
+                  groupTextWidth={'100%'}
+                  clickHandler={() => {
+                    screenManager.navigate('AbitsTimetable', {
+                      institutTitle: item.direction,
+                      groupTitle: item.group,
+                      item: item.institut,
+                      prevScreen: 'GlobalSearch',
+                    })
+                  }}
+                />
               )
             }}
           />
@@ -144,91 +134,12 @@ export const GlobalSearchScreen = () => {
             data={qs.pairs}
             keyExtractor={item => `${item.title}${Math.random()}`}
             renderItem={({ item }) => {
-              return (
-                <>
-                  <View style={styles.timetable}>
-                    <View style={styles.left}>
-                      <View style={styles.textLeft}>
-                        <TextBold style={{ color: '#fff' }}>
-                          {item.startTime.getHours() < 10 ? '0' : ''}
-                          {item.startTime.getHours()}.
-                          {item.startTime.getMinutes() < 10 ? '0' : ''}
-                          {item.startTime.getMinutes()}
-                        </TextBold>
-                        <TextRegular style={{ color: '#fff' }}>
-                          {item.endTime.getHours() < 10 ? '0' : ''}
-                          {item.endTime.getHours()}.
-                          {item.endTime.getMinutes() < 10 ? '0' : ''}
-                          {item.endTime.getMinutes()}
-                        </TextRegular>
-                      </View>
-                    </View>
-                    <View style={styles.right}>
-                      <View style={{ flexDirection: 'row' }}>
-                        <TextRegular style={styles.type}>
-                          {item.type}
-                        </TextRegular>
-                        <TextRegular
-                          style={{ ...styles.group, marginLeft: -6 }}
-                        >
-                          {item.group}
-                        </TextRegular>
-                      </View>
-                      <TextRegular style={styles.ttTitle}>
-                        {item.title}
-                      </TextRegular>
-                      <View style={styles.footer}>
-                        <TextRegular style={{ fontSize: 12 }}>
-                          {item.teacher}
-                        </TextRegular>
-                        <TextRegular style={{ fontSize: 12 }}>
-                          {item.place}
-                        </TextRegular>
-                      </View>
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      marginRight: 16,
-                      alignItems: 'flex-end',
-                      marginBottom: 12,
-                    }}
-                  >
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      onPress={() => {
-                        screenManager.navigate('AbitsTimetable', {
-                          institutTitle: item.tl,
-                          groupTitle: item.group,
-                          item: item.institut,
-                          prevScreen: 'GlobalSearch'
-                        })
-                      }}
-                    >
-                      <TextRegular style={styles.goTitle}>
-                        Перейти к расписанию
-                      </TextRegular>
-                    </TouchableOpacity>
-                  </View>
-                </>
-              )
+              return <TimetableLinkCard item={item} paddingHorizontal={0} />
             }}
           />
         </View>
       ) : (
-        <View style={{ alignItems: 'center' }}>
-          <Image
-            source={require('../../../assets/image/not_found.png')}
-            style={{
-              width: 250,
-              height: 250,
-              marginTop: 32,
-            }}
-          />
-          <TextRegular style={{ marginTop: 24, fontSize: 20 }}>
-            Пока ничего не найдено
-          </TextRegular>
-        </View>
+        <NotFound />
       )}
       <View style={{ height: 20 }} />
       <ConfigModal
@@ -275,102 +186,5 @@ const styles = StyleSheet.create({
 
   h2: {
     fontSize: 16,
-  },
-
-  teacherItem: {
-    marginVertical: 16,
-    marginBottom: 0,
-    backgroundColor: THEME.SECONDARY_COLOR,
-    borderRadius: 8,
-    padding: 8,
-  },
-
-  teacherTitle: { color: '#fff', fontSize: 16 },
-
-  institut: { color: '#fff', fontSize: 11, marginTop: 16 },
-
-  timetableContainer: {
-    marginTop: 8,
-    backgroundColor: THEME.GRAY_COLOR,
-    height: '100%',
-  },
-
-  timetable: {
-    flexDirection: 'row',
-    marginTop: 8,
-    minHeight: 138,
-    borderBottomRightRadius: 8,
-    borderTopRightRadius: 8,
-  },
-
-  left: {
-    backgroundColor: THEME.MAIN_COLOR,
-    width: 70,
-    borderBottomLeftRadius: 8,
-    borderTopLeftRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  textLeft: {
-    flexDirection: 'column',
-  },
-
-  right: {
-    width: Dimensions.get('window').width - 70 - 32,
-    backgroundColor: '#fff',
-    borderBottomRightRadius: 8,
-    borderTopRightRadius: 8,
-    borderRightWidth: 0.5,
-    borderTopWidth: 0.5,
-    borderBottomWidth: 0.5,
-    borderColor: THEME.GRAY_COLOR,
-  },
-
-  type: {
-    color: '#fff',
-    backgroundColor: THEME.SECONDARY_COLOR,
-    fontSize: 11,
-    width: 80,
-    height: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    borderRadius: 8,
-    marginHorizontal: 16,
-    marginVertical: 8,
-  },
-
-  group: {
-    color: '#fff',
-    backgroundColor: THEME.SECONDARY_COLOR,
-    fontSize: 11,
-    height: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    paddingHorizontal: 8,
-    padding: 2,
-    borderRadius: 8,
-    marginHorizontal: 16,
-    marginVertical: 8,
-  },
-
-  ttTitle: {
-    marginTop: 2,
-    marginLeft: 16,
-    width: 220,
-  },
-
-  footer: {
-    flexDirection: Dimensions.get('screen').width > 1120 ? 'row' : 'column',
-    marginTop: 10,
-    marginHorizontal: 16,
-    justifyContent: 'space-between',
-  },
-
-  goTitle: {
-    color: THEME.MAIN_COLOR,
-    fontSize: 13,
   },
 })

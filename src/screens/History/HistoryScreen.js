@@ -3,20 +3,20 @@ import {
   View,
   TouchableOpacity,
   FlatList,
-  StyleSheet,
   ScrollView,
-  Image,
   Alert,
 } from 'react-native'
 import { TextRegular } from '../../components/ui/Text'
 import { Header } from '../../components/Header'
 import { FontAwesome } from '@expo/vector-icons'
+import { historyDB } from '../../historyDB'
+import { observer } from 'mobx-react-lite'
+import { TeacherCard } from '../../components/TeacherCard'
 import history from '../../store/history'
 import teachers from '../../store/teachers'
 import screenManager from '../../store/screenManager'
-import { historyDB } from '../../historyDB'
-import { observer } from 'mobx-react-lite'
-import { THEME } from '../../theme'
+import { GroupCard } from '../../components/GroupCard'
+import { NotFound } from '../../components/NotFound'
 
 export const HistoryScreen = observer(() => {
   const data = history.data.map(el => {
@@ -59,104 +59,45 @@ export const HistoryScreen = observer(() => {
           renderItem={({ item }) => {
             if (item.type === 'group') {
               return (
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={styles.group}
-                  onPress={() => {
+                <GroupCard
+                  item={item}
+                  clickHandler={() => {
                     const { institutTitle, groupTitle, TLTitle } = item.data
                     screenManager.navigate('AbitsTimetable', {
                       institutTitle,
                       groupTitle,
                       item: TLTitle,
-                      prevScreen: 'History'
+                      prevScreen: 'History',
                     })
                   }}
-                >
-                  <TextRegular style={styles.groupText}>
-                    {item.data.groupTitle}
-                  </TextRegular>
-                </TouchableOpacity>
+                />
               )
             } else {
-              const res = teachers.data.find(el => el.teacher === item.data.teacher) || {institut: '---'}
+              const res = teachers.data.find(
+                el => el.teacher === item.data.teacher
+              ) || { institut: '---' }
               return (
-                <TouchableOpacity
-                  activeOpacity={0.8}
-                  style={styles.teacher}
-                  onPress={() => {
+                <TeacherCard
+                  clickHandler={() => {
                     const { teacher } = item.data
-                    screenManager.navigate('TeacherTimetable', { teacher, prevScreen: 'History' })
+                    screenManager.navigate('TeacherTimetable', {
+                      teacher,
+                      prevScreen: 'History',
+                    })
                   }}
-                >
-                  <TextRegular style={styles.teacherText}>
-                    {item.data.teacher}
-                  </TextRegular>
-                  <TextRegular style={styles.institutText}>
-                    {
-                      res.institut
-                    }
-                  </TextRegular>
-                </TouchableOpacity>
+                  item={{
+                    ...item.data,
+                    institut: res.institut,
+                  }}
+                />
               )
             }
           }}
         />
       ) : (
-        <View style={{ alignItems: 'center' }}>
-          <Image
-            source={require('../../../assets/image/not_found.png')}
-            style={{
-              width: 250,
-              height: 250,
-              marginTop: 32,
-            }}
-          />
-          <TextRegular style={{ marginTop: 24, fontSize: 20 }}>
-            В историях ничего нет
-          </TextRegular>
-        </View>
+        <NotFound title={'В историях ничего нет'} />
       )}
       <View style={{ height: 20 }} />
     </ScrollView>
   )
-})
-
-const styles = StyleSheet.create({
-  group: {
-    backgroundColor: THEME.SECONDARY_COLOR,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
-    marginHorizontal: 16,
-    width: 156,
-    height: 40,
-    marginTop: 8,
-  },
-
-  groupText: {
-    padding: 8,
-    fontSize: 14,
-    color: '#fff',
-    width: 156,
-    textAlign: 'center',
-  },
-
-  teacher: {
-    marginHorizontal: 16,
-    marginTop: 8,
-    backgroundColor: THEME.SECONDARY_COLOR,
-    borderRadius: 8,
-    padding: 8,
-  },
-
-  teacherText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-
-  institutText: {
-    color: '#fff',
-    fontSize: 11,
-    marginTop: 16,
-  },
 })

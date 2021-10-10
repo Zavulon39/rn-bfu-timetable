@@ -1,21 +1,15 @@
 import React from 'react'
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-  Alert,
-} from 'react-native'
+import { View, StyleSheet, FlatList, ScrollView, Alert } from 'react-native'
 import { Header } from '../../components/Header'
 import { TextRegular } from '../../components/ui/Text'
-import { THEME } from '../../theme'
 import { favoriteDB } from '../../favoriteDB'
+import { TeacherCard } from '../../components/TeacherCard'
 import { observer } from 'mobx-react-lite'
 import screenManager from '../../store/screenManager'
 import favorite from '../../store/favorite'
 import teachers from '../../store/teachers'
+import { GroupCard } from '../../components/GroupCard'
+import { NotFound } from '../../components/NotFound'
 
 export const FavoriteScreen = observer(() => {
   const showAlertGroup = (title, idx) => {
@@ -68,25 +62,23 @@ export const FavoriteScreen = observer(() => {
             renderItem={({ item }) => {
               if (JSON.parse(item.data).type === 'teacher') {
                 const { teacher } = JSON.parse(item.data)
-                const res = teachers.data.find(el => el.teacher === teacher) || {institut: '---'}
+                const res = teachers.data.find(
+                  el => el.teacher === teacher
+                ) || { institut: '---' }
                 return (
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.teacher}
-                    onPress={() => {
-                      screenManager.navigate('TeacherTimetable', { teacher, prevScreen: 'Favorite' })
+                  <TeacherCard
+                    item={{
+                      teacher,
+                      institut: res.institut,
                     }}
-                    onLongPress={() => showAlertTeacher(teacher, item.id)}
-                  >
-                    <TextRegular style={styles.teacherText}>
-                      {teacher}
-                    </TextRegular>
-                    <TextRegular style={styles.institutText}>
-                      {
-                        res.institut
-                      }
-                    </TextRegular>
-                  </TouchableOpacity>
+                    clickHandler={() => {
+                      screenManager.navigate('TeacherTimetable', {
+                        teacher,
+                        prevScreen: 'Favorite',
+                      })
+                    }}
+                    longClickHandler={() => showAlertTeacher(teacher, item.id)}
+                  />
                 )
               }
 
@@ -104,21 +96,20 @@ export const FavoriteScreen = observer(() => {
                   item.data
                 )
                 return (
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    style={styles.group}
-                    onPress={() => {
+                  <GroupCard
+                    item={{
+                      data: { groupTitle },
+                    }}
+                    clickHandler={() => {
                       screenManager.navigate('AbitsTimetable', {
                         institutTitle,
                         groupTitle,
                         item: TLTitle,
-                        prevScreen: 'Favorite'
+                        prevScreen: 'Favorite',
                       })
                     }}
-                    onLongPress={() => showAlertGroup(groupTitle, item.id)}
-                  >
-                    <TextRegular style={styles.text}>{groupTitle}</TextRegular>
-                  </TouchableOpacity>
+                    longClickHandler={() => showAlertGroup(groupTitle, item.id)}
+                  />
                 )
               }
 
@@ -129,19 +120,7 @@ export const FavoriteScreen = observer(() => {
           <View style={{ height: 20 }} />
         </>
       ) : (
-        <View style={{ alignItems: 'center' }}>
-          <Image
-            source={require('../../../assets/image/not_found.png')}
-            style={{
-              width: 250,
-              height: 250,
-              marginTop: 32,
-            }}
-          />
-          <TextRegular style={{ marginTop: 24, fontSize: 20 }}>
-            В избранном ничего нет
-          </TextRegular>
-        </View>
+        <NotFound title={'В избранном ничего нет'} />
       )}
     </ScrollView>
   )
@@ -159,41 +138,5 @@ const styles = StyleSheet.create({
     marginTop: 8,
     flexDirection: 'row',
     justifyContent: 'space-around',
-  },
-
-  group: {
-    backgroundColor: THEME.SECONDARY_COLOR,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
-    marginHorizontal: 16,
-    width: 156,
-    height: 40,
-    marginTop: 8,
-  },
-
-  text: {
-    fontSize: 14,
-    color: '#fff',
-    textAlign: 'center',
-  },
-
-  teacher: {
-    marginHorizontal: 16,
-    marginTop: 8,
-    backgroundColor: THEME.SECONDARY_COLOR,
-    borderRadius: 8,
-    padding: 8,
-  },
-
-  teacherText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-
-  institutText: {
-    color: '#fff',
-    fontSize: 11,
-    marginTop: 16,
   },
 })

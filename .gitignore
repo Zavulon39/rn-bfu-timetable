@@ -12,6 +12,7 @@ web-build/
 # macOS
 .DS_Store
 
+# IDEAs
 .idea
 .vscode
 

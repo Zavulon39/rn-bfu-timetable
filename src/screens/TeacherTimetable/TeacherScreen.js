@@ -1,17 +1,11 @@
 import React, { useState } from 'react'
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native'
-import { TextRegular } from '../../components/ui/Text'
+import { View, StyleSheet, ScrollView, FlatList } from 'react-native'
 import { TextInput } from 'react-native-paper'
 import { Header } from '../../components/Header'
 import { THEME } from '../../theme'
 import screenManager from '../../store/screenManager'
 import teacherManager from '../../store/teachers'
+import { TeacherCard } from '../../components/TeacherCard'
 
 export const TeacherScreen = () => {
   const [text, setText] = useState('')
@@ -59,14 +53,10 @@ export const TeacherScreen = () => {
         keyExtractor={item => item}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={styles.item}
-              onPress={() => clickHandler(item.teacher)}
-            >
-              <TextRegular style={styles.title}>{item.teacher}</TextRegular>
-              <TextRegular style={styles.institut}>{item.institut}</TextRegular>
-            </TouchableOpacity>
+            <TeacherCard
+              item={item}
+              clickHandler={() => clickHandler(item.teacher)}
+            />
           )
         }}
       />
@@ -85,24 +75,5 @@ const styles = StyleSheet.create({
     height: 32,
     color: THEME.DARKGRAY_COLOR,
     backgroundColor: THEME.INPUTGRAY_COLOR,
-  },
-
-  item: {
-    margin: 16,
-    marginBottom: 0,
-    backgroundColor: THEME.SECONDARY_COLOR,
-    borderRadius: 8,
-    padding: 8,
-  },
-
-  title: {
-    color: '#fff',
-    fontSize: 16,
-  },
-
-  institut: {
-    color: '#fff',
-    fontSize: 11,
-    marginTop: 16,
   },
 })

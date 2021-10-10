@@ -83,8 +83,7 @@ export const TeacherScreen = () => {
       <FlatList
         data={teachers}
         keyExtractor={item => {
-          console.log(item.teacher + item.institut)
-          return item.teacher + item.institut
+          return `${item.institut}${item.teacher}`
         }}
         renderItem={({ item }) => {
           return (

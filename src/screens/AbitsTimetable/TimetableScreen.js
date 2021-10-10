@@ -7,12 +7,10 @@ import {
   TouchableOpacity,
   Alert,
   FlatList,
-  Dimensions,
   ScrollView,
-  Image,
 } from 'react-native'
 import { Header } from '../../components/Header'
-import { TextRegular, TextBold } from '../../components/ui/Text'
+import { TextRegular } from '../../components/ui/Text'
 import { MaterialIcons, AntDesign } from '@expo/vector-icons'
 import screenManager from '../../store/screenManager'
 import abitsTimetable from '../../store/abitsTimetable'
@@ -21,6 +19,8 @@ import { favoriteDB } from '../../favoriteDB'
 import { historyDB } from '../../historyDB'
 import favorite from '../../store/favorite'
 import history from '../../store/history'
+import { TimetableCard } from '../../components/TimetableCard'
+import { NotFound } from '../../components/NotFound'
 
 export const TimetableScreen = () => {
   const institutTitle = screenManager.getParam('institutTitle')
@@ -169,57 +169,12 @@ export const TimetableScreen = () => {
             data={timetable}
             keyExtractor={item => `${item.title}${Math.random()}`}
             renderItem={({ item }) => {
-              return (
-                <View style={styles.timetable}>
-                  <View style={styles.left}>
-                    <View style={styles.textLeft}>
-                      <TextBold style={{ color: '#fff' }}>
-                        {item.startTime.getHours() < 10 ? '0' : ''}
-                        {item.startTime.getHours()}.
-                        {item.startTime.getMinutes() < 10 ? '0' : ''}
-                        {item.startTime.getMinutes()}
-                      </TextBold>
-                      <TextRegular style={{ color: '#fff' }}>
-                        {item.endTime.getHours() < 10 ? '0' : ''}
-                        {item.endTime.getHours()}.
-                        {item.endTime.getMinutes() < 10 ? '0' : ''}
-                        {item.endTime.getMinutes()}
-                      </TextRegular>
-                    </View>
-                  </View>
-                  <View style={styles.right}>
-                    <TextRegular style={styles.type}>{item.type}</TextRegular>
-                    <TextRegular style={styles.ttTitle}>
-                      {item.title}
-                    </TextRegular>
-                    <View style={styles.footer}>
-                      <TextRegular style={{ fontSize: 12 }}>
-                        {item.teacher}
-                      </TextRegular>
-                      <TextRegular style={{ fontSize: 12 }}>
-                        {item.place}
-                      </TextRegular>
-                    </View>
-                  </View>
-                </View>
-              )
+              return <TimetableCard item={item} />
             }}
           />
         </View>
       ) : (
-        <View style={{ alignItems: 'center' }}>
-          <Image
-            source={require('../../../assets/image/not_found.png')}
-            style={{
-              width: 250,
-              height: 250,
-              marginTop: 32,
-            }}
-          />
-          <TextRegular style={{ marginTop: 24, fontSize: 20 }}>
-            На этот день занятий нет
-          </TextRegular>
-        </View>
+        <NotFound title={'На этот день занятий нет'} />
       )}
       <View style={{ height: 20 }} />
     </ScrollView>
@@ -250,63 +205,5 @@ const styles = StyleSheet.create({
   timetableContainer: {
     marginTop: 8,
     height: '100%',
-  },
-
-  timetable: {
-    flexDirection: 'row',
-    marginTop: 8,
-    minHeight: 138,
-    paddingHorizontal: 16,
-  },
-
-  left: {
-    backgroundColor: THEME.MAIN_COLOR,
-    width: 70,
-    borderBottomLeftRadius: 8,
-    borderTopLeftRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  textLeft: {
-    flexDirection: 'column',
-  },
-
-  right: {
-    width: Dimensions.get('window').width - 70 - 32,
-    backgroundColor: '#fff',
-    borderBottomRightRadius: 8,
-    borderTopRightRadius: 8,
-    borderRightWidth: 0.5,
-    borderTopWidth: 0.5,
-    borderBottomWidth: 0.5,
-    borderColor: THEME.GRAY_COLOR,
-  },
-
-  type: {
-    color: '#fff',
-    backgroundColor: THEME.SECONDARY_COLOR,
-    fontSize: 11,
-    width: 80,
-    height: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    borderRadius: 8,
-    marginHorizontal: 16,
-    marginVertical: 8,
-  },
-
-  ttTitle: {
-    marginTop: 2,
-    marginLeft: 16,
-    width: 220,
-  },
-
-  footer: {
-    flexDirection: Dimensions.get('screen').width > 1120 ? 'row' : 'column',
-    marginTop: 10,
-    marginHorizontal: 16,
-    justifyContent: 'space-between',
   },
 })

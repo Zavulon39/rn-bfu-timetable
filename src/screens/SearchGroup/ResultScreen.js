@@ -5,11 +5,12 @@ import {
   Dimensions,
   FlatList,
   ScrollView,
-  Image,
   TouchableOpacity,
+  Image,
 } from 'react-native'
 import { Header } from '../../components/Header'
-import { TextRegular, TextBold } from '../../components/ui/Text'
+import { TimetableLinkCard } from '../../components/TimetableCard'
+import { TextRegular } from '../../components/ui/Text'
 import abitsTimetable from '../../store/abitsTimetable'
 import screenManager from '../../store/screenManager'
 import { THEME } from '../../theme'
@@ -43,70 +44,7 @@ export const ResultScreen = () => {
             style={{ marginTop: 8 }}
             keyExtractor={item => `${item.title}${Math.random()}`}
             renderItem={({ item }) => {
-              return (
-                <>
-                  <View style={styles.timetable}>
-                    <View style={styles.left}>
-                      <View style={styles.textLeft}>
-                        <TextBold style={{ color: '#fff' }}>
-                          {item.startTime.getHours() < 10 ? '0' : ''}
-                          {item.startTime.getHours()}.
-                          {item.startTime.getMinutes() < 10 ? '0' : ''}
-                          {item.startTime.getMinutes()}
-                        </TextBold>
-                        <TextRegular style={{ color: '#fff' }}>
-                          {item.endTime.getHours() < 10 ? '0' : ''}
-                          {item.endTime.getHours()}.
-                          {item.endTime.getMinutes() < 10 ? '0' : ''}
-                          {item.endTime.getMinutes()}
-                        </TextRegular>
-                      </View>
-                    </View>
-                    <View style={styles.right}>
-                      <View style={{ flexDirection: 'row' }}>
-                        <TextRegular style={styles.type}>
-                          {item.type}
-                        </TextRegular>
-                        <TextRegular style={styles.group}>
-                          {item.group}
-                        </TextRegular>
-                      </View>
-                      <TextRegular style={styles.ttTitle}>
-                        {item.title}
-                      </TextRegular>
-                      <View style={styles.footer}>
-                        <TextRegular style={{ fontSize: 12 }}>
-                          {item.teacher}
-                        </TextRegular>
-                        <TextRegular style={{ fontSize: 12 }}>
-                          {item.place}
-                        </TextRegular>
-                      </View>
-                    </View>
-                  </View>
-                  <View
-                    style={{
-                      marginRight: 16,
-                      alignItems: 'flex-end',
-                      marginBottom: 12,
-                    }}
-                  >
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      onPress={() => {
-                        screenManager.navigate('AbitsTimetable', {
-                          institutTitle: item.tl,
-                          groupTitle: item.group,
-                        })
-                      }}
-                    >
-                      <TextRegular style={styles.goTitle}>
-                        Перейти к расписанию
-                      </TextRegular>
-                    </TouchableOpacity>
-                  </View>
-                </>
-              )
+              return <TimetableLinkCard item={item} />
             }}
           />
         </View>
@@ -192,80 +130,5 @@ const styles = StyleSheet.create({
 
   timetableContainer: {
     height: '100%',
-  },
-
-  timetable: {
-    flexDirection: 'row',
-    minHeight: 138,
-    paddingHorizontal: 16,
-  },
-
-  left: {
-    backgroundColor: THEME.MAIN_COLOR,
-    width: 70,
-    borderBottomLeftRadius: 8,
-    borderTopLeftRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  textLeft: {
-    flexDirection: 'column',
-  },
-
-  right: {
-    width: Dimensions.get('window').width - 70 - 32,
-    backgroundColor: '#fff',
-    borderBottomRightRadius: 8,
-    borderTopRightRadius: 8,
-    borderRightWidth: 0.5,
-    borderTopWidth: 0.5,
-    borderBottomWidth: 0.5,
-    borderColor: THEME.GRAY_COLOR,
-  },
-
-  type: {
-    color: '#fff',
-    backgroundColor: THEME.SECONDARY_COLOR,
-    fontSize: 11,
-    width: 80,
-    height: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    borderRadius: 8,
-    marginHorizontal: 16,
-    marginVertical: 8,
-  },
-
-  group: {
-    color: '#fff',
-    backgroundColor: THEME.SECONDARY_COLOR,
-    fontSize: 11,
-    height: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    borderRadius: 8,
-    marginVertical: 8,
-    marginLeft: -6,
-  },
-
-  ttTitle: {
-    marginTop: 2,
-    marginLeft: 16,
-    width: 220,
-  },
-
-  footer: {
-    flexDirection: Dimensions.get('screen').width > 1120 ? 'row' : 'column',
-    marginTop: 10,
-    marginHorizontal: 16,
-    justifyContent: 'space-between',
-  },
-
-  goTitle: {
-    color: THEME.MAIN_COLOR,
-    fontSize: 13,
   },
 })
